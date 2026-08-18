@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Payment Management Microservice
 
 Java 21 + Spring Boot + MySQL payment microservice.
@@ -81,3 +82,7 @@ Returns `204 No Content`.
 Client -> PaymentController -> PaymentService -> PaymentRepository -> JPA/Hibernate -> MySQL
 
 `orderId` is stored as a `Long`, not a JPA relationship, so this service remains independently deployable from the Order Service.
+=======
+# payment-management-service
+Payment Management Service
+>>>>>>> 045343e65b1d6dc4904ef535fa2e93b674b769e0
