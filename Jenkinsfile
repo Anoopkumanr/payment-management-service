@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = "payment-management-service"
+        DOCKER_IMAGE = "anoopkumardev/payment-management-service"
         DOCKER_TAG   = "${env.BUILD_NUMBER}"
     }
 
