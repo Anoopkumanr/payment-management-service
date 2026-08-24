@@ -16,7 +16,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/Anoopkumanr/payment-management-service-api.git'
+                    url: 'https://github.com/Anoopkumanr/payment-management-service.git'
             }
         }
 
