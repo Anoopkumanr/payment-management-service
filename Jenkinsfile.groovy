@@ -44,26 +44,30 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            steps {
-                script {
-                    dockerImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
-                }
-            }
-        }
+    steps {
+        bat "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+    }
+}
 
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry(
-                        'https://index.docker.io/v1/',
-                        'dockerhub-credentials'
-                    ) {
-                        dockerImage.push("${DOCKER_TAG}")
-                        dockerImage.push("latest")
-                    }
-                }
-            }
+stage('Push Docker Image') {
+    steps {
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'dockerhub-credentials',
+                usernameVariable: 'DOCKER_USERNAME',
+                passwordVariable: 'DOCKER_PASSWORD'
+            )
+        ]) {
+            bat """
+                docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%
+                docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
+                docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
+                docker push ${DOCKER_IMAGE}:latest
+                docker logout
+            """
         }
+    }
+}
 
         stage('Cleanup Local Image') {
             steps {
